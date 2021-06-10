@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+}
+
+group 'de.blu'
+version '1.0.0-SNAPSHOT'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+jar {
+    duplicatesStrategy = 'EXCLUDE'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    compileJava {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    jar {
+        duplicatesStrategy = 'EXCLUDE'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'com.sparkjava:spark-core:2.3'
+        implementation 'com.google.code.gson:gson:2.8.7'
+        implementation 'com.google.inject:guice:4.0'
+
+        compileOnly 'org.projectlombok:lombok:1.18.8'
+        annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    }
+}

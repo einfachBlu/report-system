@@ -1,0 +1,5 @@
+rootProject.name = 'report-system'
+include 'service'
+include 'bukkit-plugin'
+include 'common'
+
