@@ -26,7 +26,7 @@ public final class DeleteReportById implements WebListener {
               Report report = this.reportRepository.getById(id);
               if (report != null) {
                 this.storage.delete(report);
-                return "";
+                return new Gson().toJson(report);
               }
             } catch (NumberFormatException e) {
               // no integer

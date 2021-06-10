@@ -1,0 +1,10 @@
+name: ReportSystem
+main: de.blu.reportsystem.ReportPlugin
+version: 1.0.0
+author: Blu
+website: https://github.com/einfachBlu/report-system
+api-version: 1.16
+commands:
+  reports:
+    permission: command.reports
+  report:

@@ -5,6 +5,7 @@ import com.google.inject.*;
 import de.blu.reportsystem.rest.RESTInitializer;
 import de.blu.reportsystem.storage.LocalStorage;
 import de.blu.reportsystem.storage.Storage;
+import de.blu.reportsystem.util.ReportWebExecutor;
 
 @Singleton
 public final class ReportService {
@@ -57,5 +58,52 @@ public final class ReportService {
     storage.load();
 
     this.injector.getInstance(RESTInitializer.class).init();
+
+    // Testing
+    ReportWebExecutor reportWebExecutor = new ReportWebExecutor();
+
+    /*
+    String content = reportWebExecutor.getRequest("http://localhost:8080");
+    System.out.println(content);
+
+    // Test async
+    reportWebExecutor
+        .getReportByIdAsync(
+            "http://localhost:8080",
+            1,
+            report -> {
+              if (report == null) {
+                System.out.println("Report is null");
+                return;
+              }
+
+              System.out.println(report);
+            });
+
+    // Create Report
+    System.out.println(
+        "Report created: "
+            + reportWebExecutor.createReport(
+                "http://localhost:8080",
+                UUID.randomUUID(),
+                "Hacker123",
+                UUID.randomUUID(),
+                "Supporter123",
+                "HACKING"));
+
+    // Show Report
+    System.out.println(
+        "Show Report (should be created): "
+            + reportWebExecutor.getReportById("http://localhost:8080", 1));
+
+    // Delete Report
+    System.out.println(
+        "Report deleted: " + reportWebExecutor.deleteReport("http://localhost:8080", 1));
+
+    // Show Report
+    System.out.println(
+        "Show Report (should be deleted): "
+            + reportWebExecutor.getReportById("http://localhost:8080", 1));
+     */
   }
 }

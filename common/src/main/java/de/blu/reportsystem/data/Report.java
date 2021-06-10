@@ -22,6 +22,10 @@ public class Report {
   private String reportSenderPlayerName;
   private UUID reportSenderPlayerId;
 
+  // Player who is currently editing this Report
+  private String reportEditingPlayerName;
+  private UUID reportEditingPlayerId;
+
   // Report Information
   private String reason;
   private long time;

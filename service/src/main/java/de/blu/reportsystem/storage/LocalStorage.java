@@ -99,6 +99,8 @@ public final class LocalStorage implements Storage {
     targetReport.setReportReceiverPlayerName(report.getReportReceiverPlayerName());
     targetReport.setReportSenderPlayerId(report.getReportSenderPlayerId());
     targetReport.setReportSenderPlayerName(report.getReportSenderPlayerName());
+    targetReport.setReportEditingPlayerId(report.getReportEditingPlayerId());
+    targetReport.setReportEditingPlayerName(report.getReportEditingPlayerName());
     targetReport.setReason(report.getReason());
     targetReport.setTime(report.getTime());
     targetReport.setReportState(report.getReportState());
