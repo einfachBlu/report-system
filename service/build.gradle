@@ -1,6 +1,11 @@
 plugins {
     id 'java'
+    id 'application'
     id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+application {
+    mainClassName = 'de.blu.reportsystem.ReportService'
 }
 
 group 'de.blu'
