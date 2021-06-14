@@ -82,7 +82,8 @@ public final class ReportCommand implements CommandExecutor, TabCompleter {
                     .filter(report -> report.getReportSenderPlayerId().equals(player.getUniqueId()))
                     .collect(Collectors.toList());
             if (reports.size() >= this.mainConfig.getPlayerMaxAmountOfReports()) {
-              player.sendMessage("§cYou reached the maximum amount of reports. Your can create new Reports after your previous Reports was marked as done.");
+              player.sendMessage(
+                  "§cYou reached the maximum amount of reports. Your can create new Reports after your previous Reports was marked as done.");
               return;
             }
 

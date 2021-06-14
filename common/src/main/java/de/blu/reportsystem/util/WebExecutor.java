@@ -77,9 +77,6 @@ public class WebExecutor {
       connection.setRequestProperty("Content-Type", "application/json");
       connection.setRequestProperty("Accept", "application/json");
 
-      // Wait for connection established
-      connection.getResponseCode();
-
       return connection;
     } catch (Exception e) {
       throw new ServiceUnreachableException();
