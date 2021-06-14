@@ -5,6 +5,7 @@ import de.blu.reportsystem.exception.ServiceUnreachableException;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class WebExecutor {
 
@@ -65,21 +66,24 @@ public class WebExecutor {
       String urlString, boolean doOutput, boolean allowUserInteraction)
       throws ServiceUnreachableException {
     try {
+      int timeout = (int) TimeUnit.SECONDS.toMillis(2);
+
       URL url = new URL(urlString);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+      connection.setConnectTimeout(timeout);
+      connection.setReadTimeout(timeout);
       connection.setDoOutput(doOutput);
       connection.setAllowUserInteraction(allowUserInteraction);
       connection.setRequestProperty("Content-Type", "application/json");
       connection.setRequestProperty("Accept", "application/json");
 
-      return connection;
-    } catch (FileNotFoundException | ConnectException e) {
-      throw new ServiceUnreachableException();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+      // Wait for connection established
+      connection.getResponseCode();
 
-    return null;
+      return connection;
+    } catch (Exception e) {
+      throw new ServiceUnreachableException();
+    }
   }
 
   private void writeContent(URLConnection connection, String content)
@@ -88,10 +92,8 @@ public class WebExecutor {
       OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
       outputStreamWriter.write(content);
       outputStreamWriter.flush();
-    } catch (FileNotFoundException | ConnectException e) {
+    } catch (Exception e) {
       throw new ServiceUnreachableException();
-    } catch (IOException e) {
-      e.printStackTrace();
     }
   }
 
@@ -107,10 +109,8 @@ public class WebExecutor {
 
         content.append(scanner.nextLine());
       }
-    } catch (FileNotFoundException | ConnectException e) {
+    } catch (Exception e) {
       throw new ServiceUnreachableException();
-    } catch (IOException e) {
-      e.printStackTrace();
     }
 
     return content.toString();

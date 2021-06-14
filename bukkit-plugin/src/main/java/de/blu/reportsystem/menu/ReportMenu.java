@@ -7,6 +7,7 @@ import de.blu.reportsystem.exception.ServiceUnreachableException;
 import de.blu.reportsystem.util.InventoryHelper;
 import de.blu.reportsystem.util.ItemStackBuilder;
 import de.blu.reportsystem.util.ReportWebExecutor;
+import de.blu.reportsystem.util.SchedulerHelper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -47,10 +48,10 @@ public final class ReportMenu extends Menu {
     this.size = 9 * 5;
     this.title = "Reports";
 
+    super.open(player);
+
     // Load all Reports
     this.loadReports();
-
-    super.open(player);
   }
 
   private void loadReports() {
@@ -64,9 +65,10 @@ public final class ReportMenu extends Menu {
             this.reports.addAll(reports);
             this.updateContent();
           } catch (ServiceUnreachableException e) {
-            player.closeInventory();
-            player.sendMessage(
+            this.player.sendMessage(
                 "§cThe Report-Service is currently unavailable. Please try again later.");
+            SchedulerHelper.runSync(
+                () -> this.player.closeInventory(InventoryCloseEvent.Reason.PLUGIN));
           }
         });
   }
@@ -201,9 +203,7 @@ public final class ReportMenu extends Menu {
           e -> {
             // Show only details to the player who claimed this report
             if (report.getReportState().equals(ReportState.IN_PROCESS)) {
-              if (!this.player.getUniqueId()
-                  .equals(report
-                          .getReportEditingPlayerId())) {
+              if (!this.player.getUniqueId().equals(report.getReportEditingPlayerId())) {
                 return;
               }
             }
